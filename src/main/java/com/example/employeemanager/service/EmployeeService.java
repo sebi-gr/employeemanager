@@ -32,8 +32,12 @@ public class EmployeeService {
         return converter.convert(employeeRepo.findAll());
     }
 
+    public List<Employee> findAllEmployeesAdmin() {
+        return employeeRepo.findAll();
+    }
+
     public EmployeeDto findEmployee(Long id) {
-        Employee employee = employeeRepo.findEmployeeById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID: "+id+" was not found!"));
+        Employee employee = employeeRepo.findEmployeeById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID: " + id + " was not found!"));
         return converter.convert(employee);
     }
 

@@ -1,6 +1,10 @@
 package com.example.employeemanager.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 @Entity
@@ -11,13 +15,18 @@ public class Employee {
 
 
     @Column(name = "first_name", nullable = false)
+    @NotBlank(message = "Name is mandatory")
     private String firstName;
 
     @Column(name = "last_name", nullable = false)
+    @NotBlank(message = "Name is mandatory")
     private String lastName;
     @Column(name = "email", nullable = false, unique = true)
+    @Email(message = "Email is mandatory", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @NotBlank(message = "Email cannot be empty")
     private String email;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "birthday", nullable = false)
     private LocalDate birthday;
 
