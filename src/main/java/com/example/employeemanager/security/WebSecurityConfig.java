@@ -41,11 +41,9 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(customUserDetailService)
-                .passwordEncoder(encoder())
-                .and()
-                .build();
+    public AuthenticationManager authenticationManagerBean(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(customUserDetailService).passwordEncoder(encoder());
+        return authenticationManagerBuilder.build();
     }
 }
