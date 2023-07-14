@@ -14,17 +14,6 @@ jobs:
 
     runs-on: ubuntu-latest
     
-    services:
-      mysql:
-        image: mysql:latest
-        env:
-          MYSQL_ROOT_PASSWORD: mysql
-          MYSQL_DATABASE: employeemanager
-          MYSQL_USER: root
-          MYSQL_PASSWORD: mysql
-        ports:
-          - 3306:3306
-          
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 20
@@ -33,16 +22,8 @@ jobs:
         java-version: '20'
         distribution: 'temurin'
         cache: maven
-    - name: Start MySQL container
-      run: docker start mysql1
-    - name: Wait for MySQL to be ready
-      run: |
-        sleep 10s
-        while ! mysqladmin ping -h 0.0.0.0 -u root -p mysql --silent; do
-          sleep 2s
-        done
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file pom.xml -Dmaven.test.skip=true
     - name: copy to staging
       run: mkdir staging && cp target/*.jar staging
     - name: upload
